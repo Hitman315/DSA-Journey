@@ -1,0 +1,14 @@
+Step 1:
+ls -al ~/.ssh
+
+Step 2:
+eval `ssh-agent -s`
+
+Step 3:
+ssh-agent -s
+
+Step 4: 
+ssh-add ~/.ssh/id_rsa
+
+Step 5:
+cat < ~/.ssh/id_rsa.pub
