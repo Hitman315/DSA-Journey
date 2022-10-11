@@ -1,0 +1,58 @@
+#include <bits/stdc++.h> 
+vector<vector<char>> constructMatrix(int n, int m)
+{
+    //    Write your code here.
+      vector<vector<char>> ans((n),vector<char>(m));
+       
+        
+        char x='X';
+        int total=n*m;
+    int count=0;
+       
+        
+        int startingRow=0;
+        int startingCol=0;
+        int endingRow=n-1;
+        int endingCol=m-1;
+        
+        while(count<total){
+            for(int i=startingCol;i<=endingCol;i++){
+                count++;
+                ans[startingRow][i]=x;
+            }
+            startingRow++;
+            
+            for(int i=startingRow; i<=endingRow;i++){
+                count++;
+                ans[i][endingCol]=x;
+            }
+            endingCol--;
+            
+            if (startingRow < n)
+        {
+            for(int i=endingCol;i>=startingCol;i--){
+                count++;
+                ans[endingRow][i]=x;
+            }
+            
+            endingRow--;
+            }
+            
+            if (startingCol < m)
+        {
+            for(int i=endingRow;i>=startingRow;i--){
+                count++;
+                ans[i][startingCol]=x;
+            }
+            
+            startingCol++;
+            }
+            if(x=='X'){
+                x='0';
+            }else{
+                x='X';
+            }
+        }
+   
+        return ans;
+    }
