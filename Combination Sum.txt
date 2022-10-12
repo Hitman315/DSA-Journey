@@ -1,0 +1,46 @@
+
+class Solution {
+  public:
+  void findPermutation(vector<int> &A, int target, int index, vector<vector<int>> &ans, vector<int> &ds){
+     //Base condition
+     if(index==A.size()){
+         if(target==0){
+             ans.push_back(ds);
+            
+         }
+          return;
+     }
+     
+     //Pick condition
+     if(A[index]<=target){
+         // Push the element while calling 
+         ds.push_back(A[index]);
+         findPermutation(A,target-A[index],index,ans,ds);
+         //pop the element while returning
+         ds.pop_back();
+     }
+     
+     //Non Pick condition
+     findPermutation(A,target,index+1,ans,ds);
+  }
+  
+    //Function to return a list of indexes denoting the required 
+    //combinations whose sum is equal to given number.
+    vector<vector<int> > combinationSum(vector<int> &A, int B) {
+        sort(A.begin(),A.end());
+        A.erase(unique(A.begin(),A.end()),A.end());
+        // Your code here
+        vector<vector<int>>ans;
+        vector<int>ds;
+        /*
+        A:Given vector
+        B:Target value
+        0:initial index
+        ans:vector to store all the combinations
+        ds:vector to store element which is picked
+        */
+        findPermutation(A,B,0,ans,ds);
+        
+        return ans;
+    }
+};
