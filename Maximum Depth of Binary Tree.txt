@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int levelorder(TreeNode* root){
+        queue<TreeNode*>q;
+        if(root ==NULL)
+            return 0;
+        int count=0;
+        q.push(root);
+        q.push(NULL);
+        count++;
+        
+       
+        while(!q.empty()){
+            TreeNode* temp=q.front();
+            q.pop();
+            
+             if(temp==NULL){
+            if(!q.empty()){
+                q.push(NULL);
+                count++;
+            }
+        }else{
+            if(temp->left){
+                q.push(temp->left);
+            }
+            if(temp->right){
+                q.push(temp->right);
+            }
+             }
+        }
+        return count;
+    }
+    
+    
+    
+    int maxDepth(TreeNode* root) {
+        
+        int count=levelorder(root);
+        return count;
+    }
+};

@@ -1,0 +1,50 @@
+
+/* A binary tree node
+
+struct Node
+{
+    int data;
+    struct Node* left;
+    struct Node* right;
+    
+    Node(int x){
+        data = x;
+        left = right = NULL;
+    }
+};
+ */
+
+//Function to return a list containing elements of left view of the binary tree.
+vector<int> onlyleft(Node* root){
+    queue<Node*>q;
+    vector<int>v;
+    if(root==NULL)
+    return v;
+    q.push(root);
+    while(!q.empty()){
+        int size=q.size();
+        for(int i=1;i<=size;i++){
+        root=q.front();
+        q.pop();
+        
+        if(i==1)
+        v.push_back(root->data);
+        
+        if(root->left)
+        q.push(root->left);
+        
+            if(root->right)
+        q.push(root->right);
+        }
+        
+    }
+     
+    return v;
+}
+vector<int> leftView(Node *root)
+{
+   // Your code here
+   vector<int>v;
+   v=onlyleft(root);
+   return v;
+}
