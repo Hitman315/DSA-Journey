@@ -1,0 +1,71 @@
+struct Node
+{
+    int data;
+    Node* left;
+    Node* right;
+};
+*/
+
+class Solution{
+  public:
+  int ans;
+  void checkif(Node *root, int h,int &visited){
+      
+     if(ans==0)return;
+     if(root==NULL)return;
+     if(root->left== NULL && root->right==NULL){
+         if(visited==-1)
+         visited=h;
+         else if(h!=visited)
+         ans=0;
+         return;
+     }
+     checkif(root->left,h+1,visited);
+     checkif(root->right,h+1,visited);
+  }
+    /*You are required to complete this method*/
+    bool check(Node *root)
+    {
+        //Your code here
+        int height=0;
+        int visited=-1;
+        ans=1;
+        checkif(root,height,visited);
+        return ans;
+    }
+};struct Node
+{
+    int data;
+    Node* left;
+    Node* right;
+};
+*/
+
+class Solution{
+  public:
+  int ans;
+  void checkif(Node *root, int h,int &visited){
+      
+     if(ans==0)return;
+     if(root==NULL)return;
+     if(root->left== NULL && root->right==NULL){
+         if(visited==-1)
+         visited=h;
+         else if(h!=visited)
+         ans=0;
+         return;
+     }
+     checkif(root->left,h+1,visited);
+     checkif(root->right,h+1,visited);
+  }
+    /*You are required to complete this method*/
+    bool check(Node *root)
+    {
+        //Your code here
+        int height=0;
+        int visited=-1;
+        ans=1;
+        checkif(root,height,visited);
+        return ans;
+    }
+};

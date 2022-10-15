@@ -1,0 +1,65 @@
+/*Structure of the node of the binary tree is as
+struct Node {
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+
+class Solution{
+    public:
+    vector<int> zigzag(Node* root){
+        vector<int>vec;
+       
+        
+        
+        queue<Node*>q;
+        q.push(root);
+        bool ans=true;
+        
+        while(!q.empty()){
+            
+            int size=q.size();
+            vector<int>v;
+            for(int i=0;i<size;i++){
+            root=q.front();
+            q.pop();
+           
+           v.push_back(root->data);
+                
+                if(root->left)
+                q.push(root->left);
+                    
+                if(root->right)
+                q.push(root->right);
+                
+            }
+            if(ans==false)
+            reverse(v.begin(),v.end());
+            for(int i=0;i<v.size();i++)
+        vec.push_back(v[i]);
+        ans=!ans;
+        
+        }
+        
+       
+        return vec;
+        
+    }
+    
+    //Function to store the zig zag order traversal of tree in a list.
+    vector <int> zigZagTraversal(Node* root)
+    {
+    	// Code here
+    	vector<int>v;
+    	 if(root==NULL)
+        return v;
+    	v=zigzag(root);
+    	return v;
+    }
+};
