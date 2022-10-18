@@ -1,0 +1,81 @@
+struct Node
+{
+    int data;
+    Node* left, * right;
+}; */
+
+class Solution {
+public:
+    void TraverseLeft(Node* root,vector<int> &ans){
+        if(root==NULL)
+        return;
+        
+        if(root->left==NULL && root->right==NULL)
+        return;
+        
+        //print the data of root while calling
+        ans.push_back(root->data);
+        
+        if(root->left)
+        TraverseLeft(root->left,ans);
+        else
+        TraverseLeft(root->right,ans);
+        
+    }
+    
+    void leafNode(Node* root,vector<int> &ans){
+        if(root==NULL)
+        return;
+        
+        //Leaf condition
+        if(root->left==NULL && root->right==NULL){
+            ans.push_back(root->data);
+            return;
+        }
+        
+        leafNode(root->left,ans);
+        leafNode(root->right,ans);
+    }
+    
+    void TraverseRight(Node* root,vector<int> &ans){
+        if(root==NULL)
+        return;
+        
+        if(root->left==NULL && root->right==NULL)
+        return;
+        
+        if(root->right)
+        TraverseRight(root->right,ans);
+        else
+        TraverseRight(root->left,ans);
+        
+        //print while returning because we need to print in reverse order
+        ans.push_back(root->data);
+    }
+    
+    
+    vector <int> boundary(Node *root)
+    {
+        //Your code here
+        vector<int>ans;
+        if(root==NULL)
+        return ans;
+        
+        //To print root node data
+        ans.push_back(root->data);
+        
+        //print left part excluding leaf node
+        TraverseLeft(root->left,ans);
+        
+        //print leaf node of left part
+        leafNode(root->left,ans);
+        
+        //print leaf node of right part
+        leafNode(root->right,ans);
+        
+        //print right part excluding leaf node
+        TraverseRight(root->right,ans);
+        
+        return ans;
+    }
+};
