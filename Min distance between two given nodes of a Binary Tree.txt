@@ -1,0 +1,46 @@
+struct Node
+{
+    int data;
+    Node* left, * right;
+}; */
+
+class Solution{
+    public:
+    Node* lca(Node* root,int a ,int b){
+        if(root==NULL) return NULL;
+        
+        if(root->data==a || root->data==b) return root;
+        Node* left=lca(root->left,a,b);
+        Node* right=lca(root->right,a,b);
+        
+        if(left==NULL && right==NULL) return NULL;
+        if(left!=NULL && right==NULL) return left;
+        if(left==NULL && right!=NULL) return right;
+        if(left!=NULL && right!=NULL) return root;
+        
+        
+    }
+    
+    int solve(Node* root,int val){
+        if(root==NULL) return 0;
+        if(root->data==val) return 1;
+        int left=solve(root->left,val);
+        int right=solve(root->right,val);
+        
+        if(!left && !right)
+        return 0;
+        else 
+        return max(left,right)+1;
+        
+    }
+    /* Should return minimum distance between a and b
+    in a tree with given root*/
+    int findDist(Node* root, int a, int b) {
+        // Your code here
+        Node* ans=lca(root,a,b);
+        int r1=solve(ans,a);
+        int r2=solve(ans,b);
+        return r1+r2-2;
+        
+    }
+};

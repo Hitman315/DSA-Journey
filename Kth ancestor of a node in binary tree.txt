@@ -1,0 +1,52 @@
+
+//User function Template for C++
+/*
+Structure of the node of the binary tree is as
+struct Node
+{
+	int data;
+	struct Node *left, *right;
+};
+*/
+// your task is to complete this function
+Node* kancestor(Node* root,int &k,int node){
+    if(root==NULL)
+    return NULL;
+    if(root->data==node)
+    return root;
+    
+    Node* left=kancestor(root->left,k,node);
+    Node* right=kancestor(root->right,k,node);
+    
+    
+    if(left!=NULL && right==NULL){
+        k--;
+        if(k<=0){
+            k=INT_MAX;
+            return root;
+        }
+    return left;
+    }
+    if(left==NULL && right!=NULL){
+        k--;
+        if(k<=0){
+            //lock answer
+            k=INT_MAX;
+            return root;
+        }
+    return right;
+    }
+    
+    
+    
+}
+int kthAncestor(Node *root, int k, int node)
+{
+    // Code here
+    Node* ans=kancestor(root,k,node);
+    if(ans==NULL || ans->data==node)
+    return -1;
+    else
+    return ans->data;
+    
+}
