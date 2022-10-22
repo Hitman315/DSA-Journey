@@ -1,0 +1,75 @@
+
+// Function to delete a node from BST.
+/*
+int minval(Node* root){
+    Node* temp=root;
+    while(temp->left!=NULL){
+        temp=temp->left;
+    }
+    return temp->data;
+}
+*/
+int maxval(Node* root){
+    Node* temp=root;
+    while(temp->right!=NULL){
+        temp=temp->right;
+    }
+    return temp->data;
+}
+
+Node *deleteNode(Node *root, int X) {
+    // your code goes here
+    if(root==NULL)
+    return NULL;
+    
+    if(root->data==X){
+        //For no child:
+        if(root->left==NULL && root->right==NULL){
+            delete root;
+            return NULL;
+        }
+        //For one child:
+        //if child in right node 
+        if(root->left==NULL && root->right!=NULL){
+            Node *temp=root->right;
+            delete root;
+            return temp;
+        }
+        //if child in left node
+        if(root->right==NULL && root->left!=NULL){
+            Node *temp=root->left;
+            delete root;
+            return temp;
+        }
+        
+        //For two child 
+        //Find maximum child node from left or minimum child from right
+        
+        //For minimum child from right
+        /*
+        if(root->right!=NULL && root->left!=NULL){
+            int mini=minval(root->right);
+            root->data=mini;
+            //We will find the minimum from right node and we need to delete mini value
+            root->right=deleteNode(root->right,mini);
+            return root;
+            
+        }
+        */
+        
+        //For maximum child from left
+        if(root->right!=NULL && root->left!=NULL){
+            int maxi=maxval(root->left);
+            root->data=maxi;
+            //We will find the minimum from left node and we need to delete maxi value
+            root->left=deleteNode(root->left,maxi);
+            return root;
+        }
+        
+    }else if(root->data>X){
+        root->left=deleteNode(root->left,X);
+    }else{
+        root->right=deleteNode(root->right,X);
+    }
+    return root;
+}

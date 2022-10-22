@@ -1,0 +1,18 @@
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+      if (p->val > q->val) {
+        swap(p, q);
+      }  
+      TreeNode* node = root;
+      while (node->val < p->val || node->val > q->val) {
+        while (node->val < p->val) {
+          node = node->right;
+        }
+        while (node->val > q->val) {
+          node = node->left;
+        }
+      }
+      return node;
+    }
+};
