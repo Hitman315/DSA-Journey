@@ -1,0 +1,45 @@
+
+/*The Node structure is
+struct Node {
+int data;
+Node * right, * left;
+};*/
+
+/*You are required to complete below method */
+void findallnodes(Node* root,map<int,int>&mapallnodes){
+    if(root==NULL)
+    return;
+    
+    mapallnodes[root->data]=1;
+    findallnodes(root->left,mapallnodes);
+    findallnodes(root->right,mapallnodes);
+}
+
+bool checkdead(Node* root,map<int,int>&mapallnodes){
+    if(root==NULL)
+    return false;
+    
+    if(root->left==NULL && root->right==NULL){
+        int pre=root->data-1;
+        int post=root->data+1;
+        
+        if(mapallnodes.find(pre)!=mapallnodes.end() && mapallnodes.find(post)!=mapallnodes.end())
+        return true;
+    }
+    return checkdead(root->left,mapallnodes) or checkdead(root->right,mapallnodes);
+}
+
+bool isDeadEnd(Node *root)
+{
+    if(root==NULL)
+    return false;
+    
+    map<int,int> mapallnodes;
+    mapallnodes[0]=1;
+    findallnodes(root,mapallnodes);
+    
+    return checkdead(root,mapallnodes);
+    
+    
+}
+

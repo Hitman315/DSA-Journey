@@ -1,0 +1,64 @@
+
+/* BST Node
+struct Node
+{
+	int key;
+	struct Node *left, *right;
+};
+*/
+
+Node* findmaxleft(Node* root,Node* &pre){
+    if(root==NULL)
+    return NULL;
+    if(root->left!=NULL){
+    Node* temp=root->left;
+    while(temp->right!=NULL){
+        temp=temp->right;
+    }
+    pre=temp;
+    }
+    
+    return pre;
+}
+
+Node* findminright(Node* root,Node* &suc){
+    if(root==NULL)
+    return NULL;
+    
+    if(root->right!=NULL){
+    Node* temp=root->right;
+    while(temp->left!=NULL){
+        temp=temp->left;
+    }
+    suc=temp;
+    }
+    
+    return suc;
+}
+// This function finds predecessor and successor of key in BST.
+// It sets pre and suc as predecessor and successor respectively
+void findPreSuc(Node* root, Node*& pre, Node*& suc, int key)
+{
+
+// Your code goes here
+if(root==NULL)
+return;
+
+if(root->key==key){
+    pre=findmaxleft(root,pre);
+    suc=findminright(root,suc);
+    return;
+}
+if(root->key>key){
+    suc=root;
+    findPreSuc(root->left,pre,suc,key);
+    
+}
+if(root->key<key){
+    pre=root;
+    findPreSuc(root->right,pre,suc,key);
+    
+}
+
+
+}

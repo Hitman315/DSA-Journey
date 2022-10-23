@@ -1,0 +1,22 @@
+{
+    public:
+    bool solve(Node* root,int lowerbound,int upperbound){
+        if(root==NULL)
+        return true;
+        
+        if(root->data>lowerbound && root->data<upperbound){
+        
+        return solve(root->left,lowerbound,root->data) &&
+        solve(root->right,root->data,upperbound);
+        }
+        else
+        return false;
+    }
+    //Function to check whether a Binary Tree is BST or not.
+    bool isBST(Node* root) 
+    {
+        // Your code here
+        return solve(root,INT_MIN,INT_MAX);
+    }
+};
+
