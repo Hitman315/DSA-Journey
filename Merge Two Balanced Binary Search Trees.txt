@@ -1,0 +1,63 @@
+struct Node {
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+class Solution
+{
+    public:
+    void inorderTraverse(Node *root,vector<int>&v){
+        if(root==NULL)
+        return;
+        
+        inorderTraverse(root->left,v);
+        v.push_back(root->data);
+        inorderTraverse(root->right,v);
+    }
+    
+    vector<int> mergebst(vector<int>&v1,vector<int>&v2,vector<int>&v3,int n1,int n2,int n3){
+        int i=0;
+        int j=0;
+        int k=0;
+        
+        while(i<n1 && j<n2 && k<n3){
+            if(v1[i]<v2[j]){
+                v3[k++]=v1[i++];
+            }else{
+                v3[k++]=v2[j++];
+            }
+        }
+        for(;i<n1;i++)
+        v3[k++]=v1[i];
+        for(;j<n2;j++)
+        v3[k++]=v2[j];
+        
+        return v3;
+    }
+    //Function to return a list of integers denoting the node 
+    //values of both the BST in a sorted order.
+    vector<int> merge(Node *root1, Node *root2)
+    {
+       //Your code here
+       vector<int>v1;
+       vector<int>v2;
+       inorderTraverse(root1,v1);
+       inorderTraverse(root2,v2);
+       
+        int n1=v1.size();
+        int n2=v2.size();
+       vector<int>v3(n1+n2);
+       int n3=v3.size();
+       vector<int>ans;
+       ans=mergebst(v1,v2,v3,n1,n2,n3);
+       return ans;
+       
+       
+    }
+};

@@ -1,0 +1,65 @@
+Approach 1:
+class Solution{
+public:
+    int count(Node* root,int l, int h, int &counts){
+        if(root==NULL)
+        return 0;
+        if(root->data>=l && root->data<=h){
+          counts++;
+        }
+        count(root->left,l,h,counts);
+        count(root->right,l,h,counts);
+      
+        return counts;
+    }
+    int getCount(Node *root, int l, int h)
+    {
+      // your code goes here   
+      if(root==NULL)
+      return 0;
+      
+      int counts=0;
+      int ans=count(root,l,h,counts);
+      
+    }
+};
+
+
+Approach 2:
+class Solution{
+public:
+    void createvec(Node* root,vector<int> &v){
+        if(root==NULL)
+        return;
+        
+        createvec(root->left,v);
+        v.push_back(root->data);
+        createvec(root->right,v);
+        
+    }
+    
+    int count(Node* root,int l,int h,vector<int> &v,int &ans){
+        if(root==NULL)
+        return 0;
+        
+        int n=v.size();
+        for(int i=0;i<n;i++){
+            if(v[i]>=l && v[i]<=h)
+            ans++;
+        }
+        
+        return ans;
+    }
+    int getCount(Node *root, int l, int h)
+    {
+      // your code goes here   
+      if (root==NULL)
+      return 0;
+      
+      vector<int>v;
+      createvec(root,v);
+      int ans=0;
+      int a=count(root,l,h,v,ans);
+      return a;
+    }
+};
