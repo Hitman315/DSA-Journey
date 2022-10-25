@@ -1,0 +1,40 @@
+
+struct Node
+{
+    int data;
+    struct Node* left;
+    struct Node* right;
+    
+    Node(int x){
+        data = x;
+        left = right = NULL;
+    }
+};
+ */
+
+// This function should return head to the DLL
+class Solution
+{
+    public: 
+    Node *btodll(Node* root,Node* &head){
+        if(root==NULL)
+        return NULL;
+        btodll(root->right,head);
+        
+        root->right=head;
+        if(head!=NULL)
+        head->left=root;
+        head=root;
+        
+        btodll(root->left,head);
+        
+        return head;
+    }
+    //Function to convert binary tree to doubly linked list and return it.
+    Node * bToDLL(Node *root)
+    {
+        // your code here
+        Node* head=NULL;
+        return btodll(root,head);
+    }
+};
