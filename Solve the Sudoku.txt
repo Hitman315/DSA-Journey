@@ -1,0 +1,57 @@
+{
+    public:
+    bool isSafetoInsert(int row,int col,int grid[N][N],int val){
+        for(int i=0;i<N;i++){
+            //If you found the value in horizontal then return false
+            if(grid[row][i]==val)
+            return false;
+            
+            //For vertical 
+            if(grid[i][col]==val)
+            return false;
+            
+            //In 3*3 matrix
+            if(grid[3*(row/3)+i/3][3*(col/3)+i%3]==val)
+            return false;
+        }
+        return true;
+    }
+    //Function to find a solved Sudoku. 
+    bool SolveSudoku(int grid[N][N])  
+    { 
+        // Your code here
+        
+        for(int row=0;row<N;row++){
+            for(int col=0;col<N;col++){
+                if(grid[row][col]==0){
+                    for(int val=1;val<=9;val++){
+                        if(isSafetoInsert(row,col,grid,val)){
+                            grid[row][col]=val;
+                            bool ans=SolveSudoku(grid);
+                            if(ans)
+                            return true;
+                            else 
+                            grid[row][col]=0;
+                        }
+                        
+                    }
+                    //After trying all the value from 1 to 9 if it does not match then return false
+                    return false;
+                }
+            }
+        }
+        //if false does not encounter then return true;
+        return true;
+    }
+    
+    //Function to print grids of the Sudoku.
+    void printGrid (int grid[N][N]) 
+    {
+        // Your code here 
+       for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                cout<<grid[i][j]<<" ";
+            }
+        }
+    }
+};
