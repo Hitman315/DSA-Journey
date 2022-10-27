@@ -1,0 +1,70 @@
+
+class Solution {
+public:
+    bool isSafe(int xs,int ys,vector<vector<int>> &matrix,int xd,int yd,vector<vector<int>> &visited){
+        if((xs>=0 && xs<matrix.size()) && (ys>=0 && ys<matrix[0].size()) && matrix[xs][ys]==1
+        && visited[xs][ys]==0){
+            return true;
+        }
+        return false;
+    }
+    
+    void findCount(vector<vector<int>> &matrix,int xs, int ys, int xd, int yd,int &max_count,
+    vector<vector<int>> &visited,int count){
+        
+        if(xs==xd && ys==yd){
+        if(count>max_count){
+        max_count=count;
+        return;
+        }
+        }
+       
+        visited[xs][ys]=1;
+
+        //Left
+        int row=xs;
+        int col=ys-1;
+        if(isSafe(row,col,matrix,xd,yd,visited)){
+            findCount(matrix,row,col,xd,yd,max_count,visited,count+1);
+        }
+        //Right
+        row=xs;
+        col=ys+1;
+        if(isSafe(row,col,matrix,xd,yd,visited)){
+            findCount(matrix,row,col,xd,yd,max_count,visited,count+1);
+        }
+        //UP
+        row=xs-1;
+        col=ys;
+        if(isSafe(row,col,matrix,xd,yd,visited)){
+            findCount(matrix,row,col,xd,yd,max_count,visited,count+1);
+        }
+        //Down
+        row=xs+1;
+        col=ys;
+        if(isSafe(row,col,matrix,xd,yd,visited)){
+            findCount(matrix,row,col,xd,yd,max_count,visited,count+1);
+        }
+        visited[xs][ys]=0;
+        
+      
+    }
+
+    int longestPath(vector<vector<int>> matrix, int xs, int ys, int xd, int yd)
+    {
+        // code here
+        if(matrix[xs][ys]==0 || matrix[xd][yd]==0){
+            return -1;
+        }
+        vector<vector<int>> visited=matrix;
+        for(int i=0;i<matrix.size();i++){
+            for(int j=0;j<matrix[0].size();j++){
+                visited[i][j]=0;
+            }
+        }
+        int max_count=-1;
+        int count=0;
+        findCount(matrix,xs,ys,xd,yd,max_count,visited,count);
+        return max_count;
+    }
+};
