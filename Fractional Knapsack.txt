@@ -1,0 +1,45 @@
+/*
+struct Item{
+    int value;
+    int weight;
+};
+*/
+
+
+class Solution
+{
+    public:
+    static bool comp(pair<double,pair<int  ,int>>a,pair<double,pair<int,int>>b){
+        
+            return a.first>b.first;
+        
+    }
+    //Function to get the maximum total value in the knapsack.
+    double fractionalKnapsack(int W, Item arr[], int n)
+    {
+        // Your code here
+        vector<pair<double,pair<int,int>>>v;
+        for(int i=0;i<n;i++){
+            pair<double,pair<int,int>>p=make_pair(((double)arr[i].value/arr[i].weight),
+            make_pair(arr[i].value,arr[i].weight));
+            v.push_back(p);
+        }
+        
+        sort(v.begin(),v.end(),comp);
+        double ans=0;
+        for(int i=0;i<v.size();i++){
+            if(W>=v[i].second.second){
+                
+                ans+=v[i].second.first;
+                W=W-v[i].second.second;
+            }
+            else{
+                double rem=(double) v[i].second.first/(double)v[i].second.second;
+                ans+=W*rem;
+                break;
+            }
+        }
+        return ans;
+    }
+        
+};
