@@ -1,0 +1,33 @@
+Approach 1:
+#include <bits/stdc++.h> 
+int kthSmallest(vector<int> &arr, int k){
+    // Write your code here.
+ int maxi=INT_MAX;
+    unordered_set<int>unset;
+    for(auto val:arr){
+        unset.insert(val);
+    }
+    
+    for(int i=1;i<maxi;i++){
+        if(unset.find(i)==unset.end()){
+            k--;
+        }
+        if(k==0){
+            return i;
+        }
+    }
+    return -1;
+    
+}
+
+Approach 2:
+int kthSmallest(vector<int> &arr, int k){
+    // Write your code here.
+    for(int i=0;i<arr.size();i++){
+        if(arr[i]<=k){
+	k++;
+	}else 
+            break;
+    }
+    return k;
+}
