@@ -1,0 +1,53 @@
+{
+    public:
+    //Function to insert heap.
+    priority_queue<int> maxpq;
+    priority_queue<int,vector<int>,greater<int>> minpq;
+    void insertHeap(int &x)
+    {
+        if(maxpq.size()==0){
+        maxpq.push(x);
+        return ;
+        }
+        if(maxpq.size()>minpq.size()){
+            if(x<maxpq.top()){
+                minpq.push(maxpq.top());
+                maxpq.pop();
+                maxpq.push(x);
+            }else{
+                minpq.push(x);
+            }
+        }else{
+            if(x<maxpq.top()){
+                maxpq.push(x);
+            }else{
+                 minpq.push(x);
+                maxpq.push(minpq.top());
+                minpq.pop();
+               
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    //Function to balance heaps.
+    void balanceHeaps()
+    {
+        
+    }
+    
+    //Function to return Median.
+    double getMedian()
+    {
+        if(maxpq.size()>minpq.size())
+        return double(maxpq.top());
+        
+        return double((maxpq.top()+minpq.top()))/(double)2;
+    }
+};
