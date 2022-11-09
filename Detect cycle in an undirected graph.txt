@@ -1,0 +1,40 @@
+  public:
+    bool checkCycle(unordered_map<int,bool>&visited, unordered_map<int,int>&parent,vector<int> adj[]
+    ,int node){
+        parent[node]=-1;
+        visited[node]=true;
+        queue<int>q;
+        q.push(node);
+        
+        while(!q.empty()){
+            int frontNode=q.front();
+            q.pop();
+            
+            for(auto it:adj[frontNode]){
+                if(visited[it]==true && it!=parent[frontNode]){
+                    return true;
+                }else if(!visited[it]){
+                    q.push(it);
+                    visited[it]=true;
+                    parent[it]=frontNode;
+                }
+            }
+            
+        }
+        return false;
+    }
+    // Function to detect cycle in an undirected graph.
+    bool isCycle(int V, vector<int> adj[]) {
+        // Code here
+        unordered_map<int,bool>visited;
+        unordered_map<int,int>parent;
+        for(int i=0;i<V;i++){
+            if(!visited[i]){
+                bool ans=checkCycle(visited,parent,adj,i);
+                if(ans)
+                return true;
+            }
+        }
+        return false;
+    }
+};

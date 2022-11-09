@@ -1,0 +1,42 @@
+{
+	public:
+	//Function to find the shortest distance of all the vertices
+    //from the source vertex S.
+    vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
+    {
+        // Code here
+        vector<int>distance(V);
+        for(int i=0;i<V;i++){
+            distance[i]=INT_MAX;
+        }
+        
+        set<pair<int,int>>st;
+        distance[S]=0;
+        st.insert(make_pair(0,S));
+        
+        while(!st.empty()){
+            //To get the first element in set
+            auto top=*(st.begin());
+            
+            int topdist=top.first;
+            int topnode=top.second;
+            st.erase(st.begin());
+            
+            for(auto neighbour:adj[topnode]){
+                int adjdist=neighbour[1];
+                int adjnode=neighbour[0];
+                if(topdist+adjdist<distance[adjnode]){
+                    auto record=st.find(make_pair(distance[adjnode],adjnode));
+                    if(record!=st.end()){
+                        st.erase(record);
+                    }
+                    //update distance
+                    distance[adjnode]=topdist+adjdist;
+                    st.insert(make_pair(distance[adjnode],adjnode));
+                    
+                }
+            }
+        }
+        return distance;
+    }
+};

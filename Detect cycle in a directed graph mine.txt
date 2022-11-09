@@ -1,0 +1,33 @@
+     public:
+    bool checkCycle(unordered_map<int,bool>&visited,unordered_map<int,bool>&dfsvisited,
+    vector<int> adj[],int node){
+        visited[node]=true;
+        dfsvisited[node]=true;
+        
+        for(auto it:adj[node]){
+            if(!visited[it]){
+                bool ans=checkCycle(visited,dfsvisited,adj,it);
+            if(ans==true)
+                return true;
+            }else if(dfsvisited[it]==true){
+                    return true;
+                }
+        }
+        dfsvisited[node]=false;
+        return false;
+    }
+    // Function to detect cycle in a directed graph.
+    bool isCyclic(int V, vector<int> adj[]) {
+        // code here
+        unordered_map<int,bool>visited;
+        unordered_map<int,bool>dfsvisited;
+        for(int i=0;i<V;i++){
+            if(!visited[i]){
+                bool ans=checkCycle(visited,dfsvisited,adj,i);
+                if(ans==true)
+                return true;
+            }
+        }
+        return false;
+    }
+};
