@@ -1,0 +1,46 @@
+{
+	public:
+	//Function to find sum of weights of edges of the Minimum Spanning Tree.
+    int spanningTree(int V, vector<vector<int>> adj[])
+    {
+        // code here
+        vector<int>key(V);
+        vector<bool>mstVisit(V);
+        
+        
+        for(int i=0;i<V;i++){
+            key[i]=INT_MAX;
+            mstVisit[i]=false;
+        }
+        
+        key[0]=0;
+        for(int i=0;i<V;i++){
+            int mini=INT_MAX;
+            int u;
+            for(int j=0;j<V;j++){
+                if(mstVisit[j]==false && key[j]<mini){
+                    u=j;
+                    mini=key[j];
+                }
+            }
+            mstVisit[u]=true;
+            
+            //Check its adjacent node
+            for(auto it:adj[u]){
+                int v=it[0];
+                int w=it[1];
+                
+                if(mstVisit[v]==false && w<key[v]){
+                    key[v]=w;
+                }
+            }
+            
+        }
+        int  sum=0;
+        for(int i=0;i<V;i++){
+            sum+=key[i];
+        }
+        return sum;
+    }
+    
+};

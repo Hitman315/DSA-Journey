@@ -1,0 +1,34 @@
+public:
+    void floodfill(vector<vector<int>>&ans,int sr,int sc,int newColor,int init){
+        if(sr<0 || sr>=ans.size() || sc<0 || sc>=ans[0].size()){
+            return ;
+        }
+        if(init!=ans[sr][sc]){
+            return ;
+        }
+        if(newColor==ans[sr][sc])
+        return ;
+        
+        ans[sr][sc]=newColor;
+        
+        floodfill(ans,sr-1,sc,newColor,init);
+        floodfill(ans,sr+1,sc,newColor,init);
+        floodfill(ans,sr,sc-1,newColor,init);
+        floodfill(ans,sr,sc+1,newColor,init);
+    }
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
+        // Code here 
+        
+        vector<vector<int>>ans=image;
+        for(int i=0;i<image.size();i++){
+            for(int j=0;j<image[0].size();j++){
+                ans[i][j]=image[i][j];
+            }
+        }
+        int init=image[sr][sc];
+        if(init==newColor)
+        return ans;
+        floodfill(ans,sr,sc,newColor,init);
+        return ans;
+    }
+};
