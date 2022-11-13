@@ -1,0 +1,56 @@
+{
+    public:
+    bool isValid(int newx,int newy,int N,vector<vector<bool>>&visited){
+        if(newx>=0 && newx<N && newy>=0 && newy<N && visited[newx][newy]==false){
+            return true;
+        }
+        return false;
+    }
+    //Function to find out minimum steps Knight needs to reach target position.
+	int minStepToReachTarget(vector<int>&KnightPos,vector<int>&TargetPos,int N)
+	{
+	    // Code here
+	    int srcx=KnightPos[0]-1;
+	    int srcy=KnightPos[1]-1;
+	    int destx=TargetPos[0]-1;
+	    int desty=TargetPos[1]-1;
+	    if(srcx==destx && srcy==desty)
+	    return 0;
+	    vector<vector<bool>>visited(N,vector<bool>(N,false));
+	    queue<pair<int,int>>q;
+	    q.push({srcx,srcy});
+	    visited[srcx][srcy]=true;
+	    
+	    int ans=0;
+	    while(!q.empty()){
+	        int size=q.size();
+	        ans++;
+	        for(int i=0;i<size;i++){
+	            pair<int,int>p=q.front();
+	            q.pop();
+	            
+	            int currx=p.first;
+	            int curry=p.second;
+	            
+	            int ax[8]={1,2,-1,-2,-1,-2,1,2};
+	            int bx[8]={2,1,-2,-1,2,1,-2,-1};
+	            
+	            for(int i=0;i<8;i++){
+	                int newx=currx+ax[i];
+	                int newy=curry+bx[i];
+	                
+	                if(newx==destx && newy==desty)
+	                return ans;
+	                
+	                if(isValid(newx,newy,N,visited)){
+	                    visited[newx][newy]=true;
+	                    q.push(make_pair(newx,newy));
+	                }
+	                
+	            }
+	        }
+	    }
+	    return ans;
+	    
+	}
+};
