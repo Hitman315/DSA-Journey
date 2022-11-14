@@ -1,0 +1,34 @@
+
+class Solution {
+  public:
+	void shortest_distance(vector<vector<int>>&matrix){
+	    int n=matrix.size();
+	    //To handle the negative number
+	    for(int i=0;i<n;i++){
+	        for(int j=0;j<n;j++){
+	            if(matrix[i][j]==-1){
+	                matrix[i][j]=1e9;
+	            }
+	            if(i==j)
+	            matrix[i][j]=0;
+	        }
+	    }
+	    // One loop to calculate all the value via 0,1,2 ....
+	    for(int via=0;via<matrix.size();via++){
+	        //two loop to access the i and j in matrix
+	        for(int i=0;i<matrix.size();i++){
+	            for(int j=0;j<matrix.size();j++){
+	                //calculate the cost of all combination and keep the minimum one'
+	                matrix[i][j]=min(matrix[i][j],matrix[i][via]+matrix[via][j]);
+	            }
+	        }
+	    }
+	    for(int i=0;i<n;i++){
+	        for(int j=0;j<n;j++){
+	            if(matrix[i][j]==1e9){
+	                matrix[i][j]=-1;
+	            }
+	        }
+	    }
+	}
+};

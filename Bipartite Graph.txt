@@ -1,0 +1,35 @@
+public:
+    bool bipartitebfs(int node,vector<int>&color,vector<int>adj[]){
+        queue<int>q;
+        q.push(node);
+        color[node]=1;
+        while(!q.empty()){
+            int front=q.front();
+            q.pop();
+            
+            for(auto it:adj[front]){
+                if(color[it]==-1){
+                    color[it]=1-color[front];
+                    q.push(it);
+                }else if(color[front]==color[it]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+	bool isBipartite(int V, vector<int>adj[]){
+	    // Code here
+	    vector<int>color(V,-1);
+	    for(int i=0;i<V;i++){
+	        if(color[i]==-1){
+	            bool ans=bipartitebfs(i,color,adj);
+	            if(ans==false){
+	                return false;
+	            }
+	        }
+	    }
+	    return true;
+	}
+
+};
