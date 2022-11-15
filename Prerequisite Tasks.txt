@@ -1,0 +1,40 @@
+public:
+    
+    bool iscycle(vector<int>adj[],vector<bool>&visited,
+    vector<bool>&dfsvisited,int node){
+        visited[node]=true;
+        dfsvisited[node]=true;
+        for(auto it:adj[node]){
+            if(!visited[it]){
+                bool ans=iscycle(adj,visited,dfsvisited,it);
+                if(ans==true)
+                return true;
+            }else if(dfsvisited[it]==true){
+                return true;
+            }
+        }
+        dfsvisited[node]=false;
+        return false;
+    }
+	bool isPossible(int N, vector<pair<int, int> >& prerequisites) {
+	    vector<int>adj[N];
+	   for(int i=0;i<prerequisites.size();i++){
+            int u=prerequisites[i].first;
+            int v=prerequisites[i].second;
+            
+            adj[u].push_back(v);
+        }
+	    vector<bool>visited(N,false);
+	    vector<bool>dfsvisited(N,false);
+	    
+	    for(int i=0;i<N;i++){
+	        if(!visited[i]){
+	            bool ans=iscycle(adj,visited,dfsvisited,i);
+	            if(ans==true)
+	            return false;
+	        }
+	    }
+	    
+	    return true;
+	}
+};

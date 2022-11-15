@@ -1,0 +1,41 @@
+  public:
+    bool isSafe(vector<vector<char>>& grid,int row,int col){
+        if(row<0 || row>=grid.size() || col<0 || col>=grid[0].size() ||
+        grid[row][col]=='0'){
+            return false;
+        }
+        return true;
+    }
+    void dfs(vector<vector<char>>& grid,int row,int col){
+        grid[row][col]='0';
+        int ax[8]={0,1,-1,0,-1,-1,1,1};
+        int bx[8]={1,0,-1,-1,1,0,-1,1};
+        
+        for(int k=0;k<8;k++){
+            int  newx=row+ax[k];
+            int newy=col+bx[k];
+            if(isSafe(grid,newx,newy)){
+                dfs(grid,newx,newy);
+            }
+        }
+    }
+    // Function to find the number of islands.
+    int numIslands(vector<vector<char>>& grid) {
+        // Code here
+        int n=grid.size();
+        int m=grid[0].size();
+       
+       
+        int count=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]=='1'){
+                    count++;
+                    dfs(grid,i,j);
+                    
+                }
+            }
+        }
+        return count;
+    }
+};
