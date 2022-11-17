@@ -1,0 +1,57 @@
+#include<bits/stdc++.h>
+bool cmp(vector<int> &a,vector<int>&b){
+    return a[2]<b[2];
+}
+void initialize(vector<int>&rank,vector<int>&parent,int n){
+    for(int i=0;i<n;i++){
+        parent[i]=i;
+        rank[i]=0;
+        
+    }
+}
+int findparent(vector<int>&parent,int node){
+    //if the node is parent of itself then you need to stop
+    if(parent[node]==node){
+        return node;
+    }
+    //if the node is not parent of itself then you need to call the parent function to findparent until node is parent of itself
+    
+    //Since it will visit all the nodes and it will consume more time so you can use parent compression to reduce the time by connecting the node directly by parent;
+    //return findparent(parent,parent[node]);
+    
+    //Parent Compression
+    return parent[node]=findparent(parent,parent[node]);
+}
+
+void unionop(int u,int v,vector<int>&rank,vector<int>&parent){
+    u=findparent(parent,u);
+    v=findparent(parent,v);
+    if(rank[u]<rank[v]){
+        parent[u]=v;
+    }else if(rank[v]<rank[u]){
+        parent[v]=u;
+    }else{
+        parent[v]=u;
+        rank[u]++;
+    }
+}
+
+int minimumSpanningTree(vector<vector<int>>& edges, int n)
+{
+    sort(edges.begin(),edges.end(),cmp);
+  vector<int>rank(n);
+  vector<int>parent(n);
+    initialize(rank,parent,n);
+    int ans=0;
+    for(int i=0;i<edges.size();i++){
+        int u=findparent(parent,edges[i][0]);
+        int v=findparent(parent,edges[i][1]);
+        int wt=edges[i][2];
+        
+        if(u!=v){
+            ans+=wt;
+            unionop(u,v,rank,parent);
+        }
+    }
+    return ans;
+}
