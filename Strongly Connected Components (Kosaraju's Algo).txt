@@ -1,0 +1,54 @@
+
+class Solution
+{
+	public:
+	void dfs(vector<int>&visited,stack<int>&st,vector<int>adj[],int node){
+	    visited[node]=1;
+	    for(auto it:adj[node]){
+	        if(!visited[it])
+	        dfs(visited,st,adj,it);
+	    }
+	    st.push(node);
+	}
+	
+	void revdfs(int front,vector<int>transpose[],vector<int>&visited){
+	    
+	    visited[front]=1;
+	    for(auto it:transpose[front]){
+	        if(!visited[it]){
+	            revdfs(it,transpose,visited);
+	        }
+	    }
+	}
+	//Function to find number of strongly connected components in the graph.
+    int kosaraju(int V, vector<int> adj[])
+    {
+        //Step 1: Topological Sort
+        vector<int>visited(V,0);
+        stack<int>st;
+        for(int i=0;i<V;i++){
+            if(!visited[i]){
+                dfs(visited,st,adj,i);
+            }
+        }
+        //Step 2: Transpose of given graph
+        vector<int>transpose[V];
+        for(int i=0;i<V;i++){
+            visited[i]=0;
+            for(auto it:adj[i]){
+                transpose[it].push_back(i);
+            }
+        }
+        int count=0;
+        //Step 3: DFS according to finishing time
+        while(!st.empty()){
+            int front=st.top();
+            st.pop();
+            if(!visited[front]){
+                revdfs(front,transpose,visited);
+                count++;
+            }
+        }
+        return count;
+    }
+};
